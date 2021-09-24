@@ -16,30 +16,29 @@ This package was hugely inspired by :
     pip install gdpstorage
 
 ## Setup
-1. Add "gdpstorage" to your INSTALLED_APPS setting like this :
+-Add "gdpstorage" to your INSTALLED_APPS setting like this :
 ```py
     INSTALLED_APPS = [
         ...
         'gdpstorage',
     ]
 ```
-2. Include the gdpstorage's URLconf in your project urls.py like this:
+-Include the gdpstorage's URLconf in your project urls.py like this:
 ```py
 path('gdps/', include('gdpstorage.urls'))
 ```
-3. Add The following settings to your settings.py :
+-Add The following settings to your settings.py :
 ```py
 # Replace [MY-GD-FOLDERNAME] by the name of your Google Drive Folder you wish to use as root Media folder.
 GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = "MY-GD-FOLDERNAME"
 ```
-4. Change your Default Storage Engine (if you want to use GD globaly, else you can change it on field basis using the storage keyword argument )
+-Change your Default Storage Engine (if you want to use GD globaly, else you can change it on field basis using the storage keyword argument )
 ```py
 DEFAULT_FILE_STORAGE = "gdpstorage.storage.GoogleDriveStorage"
 ```
-
-5. Create your Oath2 application and download your client_secrets.json file (see https://github.com/torre76/django-googledrive-storage documentation for steps )
-6. Put your file client_secrets.json at the root of your Django project (beside manage.py)
-7. Authorize the access to your Google Drive Folder by visiting:
+-Create your Oath2 application and download your client_secrets.json file (see https://github.com/torre76/django-googledrive-storage documentation for steps )
+-Put your file client_secrets.json at the root of your Django project (beside manage.py)
+-Authorize the access to your Google Drive Folder by visiting:
     ```sh
     http://127.0.0.1:8000/gdps/authorize
     ```
