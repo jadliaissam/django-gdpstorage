@@ -6,7 +6,7 @@ from io import BytesIO
 import django
 import enum
 import six
-from django.core.exceptions import ImproperlyConfigured
+from django.core.exceptions import ImproperlyConfigured, ValidationError
 from googleapiclient.http import MediaIoBaseUpload, MediaIoBaseDownload
 from dateutil.parser import parse
 from django.conf import settings
@@ -196,6 +196,8 @@ class GoogleDriveStorage(Storage):
         self._drive_service = drive.auth.service
         if settings.GOOGLE_DRIVE_STORAGE_MEDIA_ROOT is None:
             raise ImproperlyConfigured('You must add a Google Directory Name in your settings.py File')
+        if self._drive_service is None:
+            raise ValidationError("Drive Service is not Ready")
         self.root_folder = self._get_or_create_folder(settings.GOOGLE_DRIVE_STORAGE_MEDIA_ROOT)
         if self.root_folder is None:
             raise ImproperlyConfigured('You must provide a valid existing Google Drive Folder Name')
