@@ -4,6 +4,9 @@ from django.db.models import QuerySet
 from django.utils import timezone
 
 from .timestamp import TimeStamp
+from ..storage import GoogleDriveStorage
+
+storage = GoogleDriveStorage()
 
 
 class SoftDeletionQuerySet(QuerySet):
