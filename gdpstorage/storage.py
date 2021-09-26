@@ -196,8 +196,14 @@ class GoogleDriveStorage(Storage):
         self._drive_service = drive.auth.service
         if settings.GOOGLE_DRIVE_STORAGE_MEDIA_ROOT is None:
             raise ImproperlyConfigured('You must add a Google Directory Name in your settings.py File')
+        # Check if The Drive Service was loaded successfully
         if self._drive_service is None:
-            raise ValidationError("Drive Service is not Ready")
+            # if not retry loading from file/env
+            self._drive_service = GoogleDrive(authorize_gd()).auth.service
+            # Second Check
+            if self._drive_service is None:
+                # No way to Continue. Stop here
+                raise ValidationError("Drive Service is not Ready")
         self.root_folder = self._get_or_create_folder(settings.GOOGLE_DRIVE_STORAGE_MEDIA_ROOT)
         if self.root_folder is None:
             raise ImproperlyConfigured('You must provide a valid existing Google Drive Folder Name')
